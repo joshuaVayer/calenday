@@ -17,17 +17,19 @@ function calenday(format, id, date) {
     var wrapper = document.getElementById(id);
     // Create a JS date and set to GMT x
     var d = new Date(date + " GMT" + timeDiff);
-    console.log(today());
     // Gets the required elements for following loop 
     var firstDstr = getFirstDay(d, format);
     var lastDstr = getLastDay(d, format);
     var currentD = new Date(firstDstr);
     wrapper.append(getMonthDiv(d.getMonth()));
-    wrapper.append(getLabels());
+    wrapper.append(getLabels(format));
     // Create a div for each day
     do {
         var w = crtDiv();
         w.classList.add('cl_week');
+        if (format === 'week') {
+            w.append(getHoursLabels(hours[0], hours[1]));
+        }
         for (var i = 0; i < 7; i++) {
             var singleWeek = (format === 'week') ? true : false;
             var fillUp = currentD.getMonth() === d.getMonth() ? false : true;
@@ -46,6 +48,7 @@ function calenday(format, id, date) {
 // 2.1 - Variables and const
 //-----------------------------
 var timeDiff = '00:00';
+var hours = [8, 17];
 var formats = ['week', 'month'];
 var labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'October', 'December'];
@@ -67,9 +70,14 @@ var today = function () {
 // 2.3 - Funtions
 //-----------------------------
 // Create the labels from the array of labels
-function getLabels() {
+function getLabels(format) {
     var ls = crtDiv();
     ls.classList.add('cl_labels');
+    if (format == 'week') {
+        var s = crtDiv();
+        s.classList.add('cl_H-label', 'cl_H-labels_shift');
+        ls.append(s);
+    }
     labels.forEach(function (label) {
         var l = crtDiv();
         l.classList.add('cl_label');
@@ -78,10 +86,25 @@ function getLabels() {
     });
     return ls;
 }
+function getHoursLabels(start, end) {
+    var hs = crtDiv();
+    var th = crtDiv();
+    hs.classList.add('cl_H-labels');
+    th.classList.add('cl_H-header');
+    th.textContent = 'Hours';
+    hs.append(th);
+    for (var i = start; i < end; i++) {
+        var h = crtDiv();
+        h.classList.add('cl_H-label');
+        h.textContent = i + ":00";
+        hs.append(h);
+    }
+    return hs;
+}
 // Create the div from th current month
 function getMonthDiv(month) {
     var m = crtDiv();
-    m.classList.add('cl_month');
+    m.classList.add('cl_month', month.toString());
     m.textContent = months[month];
     return m;
 }
@@ -100,8 +123,7 @@ function getDayDiv(day, singleWeek, fillUp, weekend) {
         d.classList.add('cl_day__weekend');
     t.textContent = day.toString();
     if (singleWeek) { // Generates the different hours
-        var hours = [8, 17];
-        for (var i = hours[0]; i < hours[2]; i++) {
+        for (var i = hours[0]; i < hours[1]; i++) {
             var h = crtDiv();
             h.classList.add('cl_hour');
             c.append(h);

@@ -19,20 +19,20 @@ function calenday(format: string, id: string, date: string= today()): number{
 
     // Create a JS date and set to GMT x
     let d: Date = new Date(`${date} GMT${timeDiff}`)
-
-    console.log(today());
-     
+    
     // Gets the required elements for following loop 
     let firstDstr: string = getFirstDay(d, format);
     let lastDstr: string = getLastDay(d,format)
     let currentD: Date = new Date(firstDstr)
 
     wrapper.append(getMonthDiv(d.getMonth()))
-    wrapper.append(getLabels())
+    wrapper.append(getLabels(format))
+    
     // Create a div for each day
     do {
         const w: HTMLElement = crtDiv()
         w.classList.add('cl_week')
+        if (format === 'week') {w.append(getHoursLabels(hours[0], hours[1]))}
 
         for (let i = 0; i < 7; i++) {
             let singleWeek = (format === 'week') ? true : false;
@@ -56,6 +56,7 @@ function calenday(format: string, id: string, date: string= today()): number{
 //-----------------------------
 
 const timeDiff: string = '00:00';
+const hours: Array<number> = [8, 17];
 const formats: Array<string> = ['week', 'month'];
 const labels: Array<string> = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const months: Array<string> = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'October', 'December'];
@@ -82,10 +83,17 @@ const today = ():string => {
 //-----------------------------
 
 // Create the labels from the array of labels
-function getLabels(): HTMLElement {
-    const ls: HTMLElement = crtDiv();
+function getLabels(format: string): HTMLElement {
 
+    const ls: HTMLElement = crtDiv();
     ls.classList.add('cl_labels')
+
+    if (format == 'week') {
+        const s: HTMLElement = crtDiv();
+        s.classList.add('cl_H-label', 'cl_H-labels_shift');
+        ls.append(s);
+    }
+
     labels.forEach(label => {
         const l: HTMLElement = crtDiv();
         l.classList.add('cl_label');
@@ -96,10 +104,33 @@ function getLabels(): HTMLElement {
     return ls;
 }
 
+function getHoursLabels(start: number, end: number): HTMLElement {
+
+    const hs: HTMLElement = crtDiv();
+    const th: HTMLElement = crtDiv();
+
+    hs.classList.add('cl_H-labels');
+    th.classList.add('cl_H-header');
+    th.textContent = 'Hours';
+
+
+    hs.append(th)
+
+    for (let i = start; i < end; i++) {
+
+        const h: HTMLElement = crtDiv();
+        h.classList.add('cl_H-label');
+        h.textContent = `${i}:00`
+        hs.append(h)
+    }
+
+    return hs;
+}
+
 // Create the div from th current month
 function getMonthDiv(month: number): HTMLElement {
     const m: HTMLElement = crtDiv();
-    m.classList.add('cl_month')
+    m.classList.add('cl_month', month.toString())
     m.textContent = months[month]
 
     return m;
@@ -123,17 +154,15 @@ function getDayDiv(day: number, singleWeek: boolean, fillUp: boolean, weekend: b
     t.textContent = day.toString();
 
     if (singleWeek) { // Generates the different hours
-
-        let hours = [8, 17];
-        for (let i = hours[0]; i < hours[2]; i++) {
+        for (let i = hours[0]; i < hours[1]; i++) {
             const h: HTMLElement = crtDiv();
-            h.classList.add('cl_hour')
-            c.append(h)
+            h.classList.add('cl_hour');
+            c.append(h);            
         }
     }
 
-    d.append(t, c)
-    return d
+    d.append(t, c);
+    return d;
 }
 
 // Calculate the first day of the first week from the current month if format == 'month' otherwise the first day of the week

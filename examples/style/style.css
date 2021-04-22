@@ -6,17 +6,24 @@
     display: flex;
 }
 .cl_label{
-    width: 100px;
+    width: 150px;
     text-align: center;
     border: 1px solid black;
     background-color: gray;
     color: white;
 }
+.cl_H-label{
+    width: 50px;
+    text-align: end;
+    margin-right: 5px;
+    color: grey;
+    font-style: italic;
+}
 .cl_week{
     display: flex;
 }
 .cl_day{
-    width: 100px;
+    width: 150px;
     border: 1px solid black;
 }
 .cl_day-header{
@@ -32,6 +39,7 @@
 .cl_day__weekend{
     color: red;
 }
+
 
 h1{
     position: absolute;
