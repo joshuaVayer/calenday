@@ -1,0 +1,42 @@
+.cl_month{
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+.cl_labels{
+    display: flex;
+}
+.cl_label{
+    width: 100px;
+    text-align: center;
+    border: 1px solid black;
+    background-color: gray;
+    color: white;
+}
+.cl_week{
+    display: flex;
+}
+.cl_day{
+    width: 100px;
+    border: 1px solid black;
+}
+.cl_day-header{
+    border-bottom: lightgrey solid 1px;
+}
+.cl_day-content{
+    height: 100px;
+}
+.cl_day__dif{
+    background-color: lightyellow;
+    color: grey;
+}
+.cl_day__weekend{
+    color: red;
+}
+
+h1{
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+    font-style: italic;
+    color: lightseagreen;
+}
