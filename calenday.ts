@@ -8,7 +8,7 @@ function calenday(format: string, id: string, date: string= today()): number{
     if (formats.indexOf(format) == -1) {
         return 1;
     }
-    if (typeof date != 'string' || date.length != 10) {
+    if (typeof date != 'string' || date.length > 10) {
         return 2;
     }
     if (typeof id != 'string') {
@@ -66,9 +66,10 @@ const months: Array<string> = ['January', 'February', 'March', 'April', 'May', '
 //-----------------------------
 
 const crtDiv = (): HTMLElement => document.createElement('div');
-const dateTS = (date): string => {
+const dateTS = (date: Date, gmt: boolean = true): string => {
     let month = date.getMonth() + 1;
-    let dateTS = `${month}/${date.getDate().toString()}/${date.getFullYear().toString()} GMT${timeDiff}`;
+    let dateTS = `${month}/${date.getDate().toString()}/${date.getFullYear().toString()}`;
+    if (gmt) dateTS +=  ` GMT${timeDiff}`
     return dateTS;
 }
 const today = ():string => {
@@ -199,4 +200,26 @@ function getLastDay(date: Date, format: string) {
     let result = new Date(getFirstDay(tmp, 'week'))
     result.setDate(result.getDate() + 6)
     return dateTS(result);
+}
+
+const updateMonth = (initial: Date, side: string): string => {
+    let month: number = initial.getMonth() + 1;
+    let year: number = initial.getFullYear()
+    if (side === 'up'){
+        if (month === 12){
+            month = 1;
+            year += 1;
+        } else {
+            month += 1;
+        }
+    }
+    if (side === 'down'){
+        if (month === 1){
+            month = 12;
+            year -= 1;
+        } else {
+            month -= 1;
+        }
+    }
+    return `${month}/1/${year}`;
 }

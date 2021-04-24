@@ -7,7 +7,7 @@ function calenday(format, id, date) {
     if (formats.indexOf(format) == -1) {
         return 1;
     }
-    if (typeof date != 'string' || date.length != 10) {
+    if (typeof date != 'string' || date.length > 10) {
         return 2;
     }
     if (typeof id != 'string') {
@@ -56,9 +56,12 @@ var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'A
 // 2.2 - Shorthands
 //-----------------------------
 var crtDiv = function () { return document.createElement('div'); };
-var dateTS = function (date) {
+var dateTS = function (date, gmt) {
+    if (gmt === void 0) { gmt = true; }
     var month = date.getMonth() + 1;
-    var dateTS = month + "/" + date.getDate().toString() + "/" + date.getFullYear().toString() + " GMT" + timeDiff;
+    var dateTS = month + "/" + date.getDate().toString() + "/" + date.getFullYear().toString();
+    if (gmt)
+        dateTS += " GMT" + timeDiff;
     return dateTS;
 };
 var today = function () {
@@ -158,3 +161,26 @@ function getLastDay(date, format) {
     result.setDate(result.getDate() + 6);
     return dateTS(result);
 }
+var updateMonth = function (initial, side) {
+    var month = initial.getMonth() + 1;
+    var year = initial.getFullYear();
+    if (side === 'up') {
+        if (month === 12) {
+            month = 1;
+            year += 1;
+        }
+        else {
+            month += 1;
+        }
+    }
+    if (side === 'down') {
+        if (month === 1) {
+            month = 12;
+            year -= 1;
+        }
+        else {
+            month -= 1;
+        }
+    }
+    return month + "/1/" + year;
+};

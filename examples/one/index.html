@@ -10,9 +10,31 @@
 <body>
     <h1>Calenday</h1>
     <div id="calenday"></div>
+    <div class="buttons">
+        <button id="prev">Prev month</button>
+        <button id="next">Next month</button>
+    </div>
     <script src="../../calenday.js"></script>
     <script>
-        calenday('month', 'calenday')
+        let date = new Date()
+
+        calenday('month', 'calenday', dateTS(date, false))
+
+        const next = document.getElementById('next');
+        const prev = document.getElementById('prev');
+        const calendar = document.getElementById('calenday')
+
+        next.addEventListener('click', () => {
+            date = new Date(updateMonth(date, 'up'))
+            calendar.innerHTML = '';
+            calenday('month', 'calenday', dateTS(date, false))
+        })
+        prev.addEventListener('click', () => {
+            date = new Date(updateMonth(date, 'down'))
+            calendar.innerHTML = '';
+            calenday('month', 'calenday', dateTS(date, false))
+        })
+
     </script>
 </body>
 </html>
