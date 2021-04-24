@@ -1,0 +1,106 @@
+
+.calendars{
+    display: flex;
+    width: 90vw;
+    margin: auto;
+    margin-top: 50px;
+    justify-content: center;
+
+}
+
+#calendayMini {
+    position: relative;
+    height: 300px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: rgb(224, 224, 224);
+    margin-right: 50px;
+}
+#calendayMini .cl_month{
+    position: absolute;
+    top: -25px;
+    font-size: 20px;
+}
+#calendayMini .cl_labels{
+    display: none;
+}
+#calendayMini .cl_week{
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    display: flex;
+}
+#calendayMini .cl_day{
+    flex: 1;
+    height: 100%;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#calendayMini .cl_day:hover{
+    background-color: lightgrey;
+    cursor: pointer;
+}
+#calendayMini .cl_day__weekend{
+    color: tomato;
+    font-weight: bolder;
+}
+#calendayMini .cl_day__dif{
+    color: rgb(143, 152, 161);
+    font-style: italic;
+    font-weight: normal;
+}
+
+
+
+
+#calendayWeek .cl_month{
+    display: none;
+}
+#calendayWeek .cl_labels{
+    display: flex;
+}
+#calendayWeek .cl_label{
+    width: 150px;
+    text-align: center;
+    border: 1px solid black;
+    background-color: gray;
+    color: white;
+}
+#calendayWeek .cl_H-label{
+    width: 50px;
+    text-align: end;
+    margin-right: 5px;
+    color: grey;
+    font-style: italic;
+}
+
+#calendayWeek .cl_week{
+    display: flex;
+}
+#calendayWeek .cl_day{
+    width: 150px;
+    border: 1px solid black;
+}
+#calendayWeek .cl_day-header{
+    border-bottom: lightgrey solid 1px;
+}
+#calendayWeek .cl_day-content{
+    height: 100px;
+}
+#calendayWeek .cl_day__dif{
+    background-color: lightyellow;
+    color: grey;
+}
+#calendayWeek .cl_day__weekend{
+    color: red;
+}
+
+h1{
+    font-style: italic;
+    color: lightseagreen;
+}
