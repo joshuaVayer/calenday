@@ -38,7 +38,7 @@ function calenday(format: string, id: string, date: string= today()): number{
             let singleWeek = (format === 'week') ? true : false;
             let fillUp = currentD.getMonth() === d.getMonth() ? false : true;
             let weekend = currentD.getDay() == 0 || currentD.getDay() == 6 ? true : false;
-            let div = getDayDiv(currentD.getDate(), singleWeek, fillUp, weekend)
+            let div = getDayDiv(currentD, singleWeek, fillUp, weekend)
             w.append(div)
             currentD.setDate(currentD.getDate() + 1)
         }
@@ -65,7 +65,7 @@ const months: Array<string> = ['January', 'February', 'March', 'April', 'May', '
 // 2.2 - Shorthands
 //-----------------------------
 
-const crtDiv = () => document.createElement('div');
+const crtDiv = (): HTMLElement => document.createElement('div');
 const dateTS = (date): string => {
     let month = date.getMonth() + 1;
     let dateTS = `${month}/${date.getDate().toString()}/${date.getFullYear().toString()} GMT${timeDiff}`;
@@ -137,7 +137,10 @@ function getMonthDiv(month: number): HTMLElement {
 }
 
 // Create a the div from one day
-function getDayDiv(day: number, singleWeek: boolean, fillUp: boolean, weekend: boolean): HTMLElement {
+function getDayDiv(date: Date, singleWeek: boolean, fillUp: boolean, weekend: boolean): HTMLElement {
+
+    const day = date.getDate()
+    const dataDate = dateTS(date);
 
     const d: HTMLElement = crtDiv();
     const t: HTMLElement = crtDiv();
@@ -146,6 +149,8 @@ function getDayDiv(day: number, singleWeek: boolean, fillUp: boolean, weekend: b
     d.classList.add('cl_day');
     t.classList.add('cl_day-header');
     c.classList.add('cl_day-content');
+
+    d.dataset.date = dataDate.slice(0, -8);
 
     // Special classes 
     if (fillUp) d.classList.add('cl_day__dif')

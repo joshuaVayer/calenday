@@ -34,7 +34,7 @@ function calenday(format, id, date) {
             var singleWeek = (format === 'week') ? true : false;
             var fillUp = currentD.getMonth() === d.getMonth() ? false : true;
             var weekend = currentD.getDay() == 0 || currentD.getDay() == 6 ? true : false;
-            var div = getDayDiv(currentD.getDate(), singleWeek, fillUp, weekend);
+            var div = getDayDiv(currentD, singleWeek, fillUp, weekend);
             w.append(div);
             currentD.setDate(currentD.getDate() + 1);
         }
@@ -109,13 +109,16 @@ function getMonthDiv(month) {
     return m;
 }
 // Create a the div from one day
-function getDayDiv(day, singleWeek, fillUp, weekend) {
+function getDayDiv(date, singleWeek, fillUp, weekend) {
+    var day = date.getDate();
+    var dataDate = dateTS(date);
     var d = crtDiv();
     var t = crtDiv();
     var c = crtDiv();
     d.classList.add('cl_day');
     t.classList.add('cl_day-header');
     c.classList.add('cl_day-content');
+    d.dataset.date = dataDate.slice(0, -8);
     // Special classes 
     if (fillUp)
         d.classList.add('cl_day__dif');
